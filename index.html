@@ -1,38 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title>Student Task Manager</title>
-  <link rel="stylesheet" href="css/style.css">
+<meta charset="UTF-8">
+<title>Student Task Manager</title>
+<link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
 
-  <h1>Student Task Manager</h1>
+<h1>Student Task Manager</h1>
 
-  <!-- Task Input Section -->
-  <input id="taskInput" placeholder="Enter task">
+<div class="container">
 
-  <select id="memberSelect">
-    <option value="">Assign to...</option>
-  </select>
+<input id="taskInput" placeholder="Enter task">
 
-  <button id="addBtn">Add Task</button>
+<select id="memberSelect">
+<option value="">Assign to...</option>
+</select>
 
-  <!-- Dashboard -->
-  <h2>Dashboard</h2>
-  <div id="dashboard">
-    <p id="todoCount"></p>
-    <p id="progressCount"></p>
-    <p id="doneCount"></p>
-    <p id="totalCount"></p>
-  </div>
+<button id="addBtn">Add Task</button>
 
-  <!-- Task List -->
-  <h2>Tasks</h2>
-  <ul id="taskList"></ul>
+<h2>Dashboard</h2>
+<div id="dashboard">
+<p id="todoCount"></p>
+<p id="progressCount"></p>
+<p id="doneCount"></p>
+<p id="totalCount"></p>
+</div>
 
-  <script src="js/data.js"></script>
-  <script src="js/task.js"></script>
+<h2>Tasks</h2>
+<ul id="taskList"></ul>
+
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/task.js"></script>
 
 </body>
 </html>
