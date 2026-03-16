@@ -106,6 +106,18 @@ In future versions of the system, the following improvements could be implemente
 • Enable multi-user access to the system
 
 ---
+---
+
+## Data Flow Overview
+
+The system follows a simple data flow:
+
+User Input → Task Creation → Task Stored in localStorage → Task Displayed in Dashboard
+
+When a user creates a task, the task data is stored inside the browser's localStorage. 
+The application then reads the stored data and updates the task list and dashboard statistics.
+
+This process ensures that tasks remain available even after the page is refreshed.
 
 ## Conclusion
 
