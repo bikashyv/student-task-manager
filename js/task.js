@@ -12,6 +12,7 @@ function addTask() {
   };
 
   tasks.push(task);
+   alert("Task added successfully!");
   saveTasks();
   input.value = "";
   memberSelect.value = "";
