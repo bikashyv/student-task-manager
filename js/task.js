@@ -23,6 +23,15 @@ function deleteTask(taskId) {
   saveTasks();
   render();
 }
+function markAllDone() {
+  tasks = tasks.map(task => ( { 
+    ...task,
+    status: "Done"
+}));
+
+saveTasks();
+render();
+}
 
 function changeStatus(taskId) {
   tasks = tasks.map(task => {
