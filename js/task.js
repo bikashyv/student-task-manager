@@ -1,115 +1,145 @@
 function addTask() {
   const input = document.getElementById("taskInput");
   const memberSelect = document.getElementById("memberSelect");
+  const prioritySelect = document.getElementById("prioritySelect");
+  const dueDate = document.getElementById("dueDate");
 
-  if (input.value.trim() === "" || memberSelect.value === "") return;
+  if (
+    input.value.trim() === "" ||
+    memberSelect.value === "" ||
+    prioritySelect.value === ""
+  ) {
+    alert("Fill all fields");
+    return;
+  }
 
   const task = {
     id: Date.now(),
     title: input.value,
     assignedTo: parseInt(memberSelect.value),
-    status: "To Do"
+    status: "To Do",
+    priority: prioritySelect.value,
+    dueDate: dueDate.value
   };
 
   tasks.push(task);
-   alert("Task added successfully!");
   saveTasks();
+
   input.value = "";
   memberSelect.value = "";
+  prioritySelect.value = "";
+  dueDate.value = "";
+
   render();
 }
 
-function deleteTask(taskId) {
-  tasks = tasks.filter(task => task.id !== taskId);
+function deleteTask(id) {
+  if (!confirm("Delete task?")) return;
+  tasks = tasks.filter(t => t.id !== id);
   saveTasks();
   render();
 }
-function markAllDone() {
-  tasks = tasks.map(task => ( { 
-    ...task,
-    status: "Done"
-}));
 
-saveTasks();
-render();
-}
-
-function changeStatus(taskId) {
-  tasks = tasks.map(task => {
-    if (task.id === taskId) {
-      if (task.status === "To Do") task.status = "In Progress";
-      else if (task.status === "In Progress") task.status = "Done";
-      else task.status = "To Do";
+function changeStatus(id) {
+  tasks = tasks.map(t => {
+    if (t.id === id) {
+      if (t.status === "To Do") t.status = "In Progress";
+      else if (t.status === "In Progress") t.status = "Done";
+      else t.status = "To Do";
     }
-    return task;
+    return t;
   });
 
   saveTasks();
   render();
 }
 
-function render() {
+function render(filteredTasks = tasks) {
   const list = document.getElementById("taskList");
   list.innerHTML = "";
 
-  tasks.forEach(task => {
-    const member = members.find(m => m.id === task.assignedTo) || {
-      name: "Unknown",
-      role: "Unknown"
-    };
+  if (filteredTasks.length === 0) {
+    list.innerHTML = "<p>No tasks yet</p>";
+    return;
+  }
+
+  filteredTasks.forEach(task => {
+    const member = members.find(m => m.id === task.assignedTo);
 
     const li = document.createElement("li");
+    li.className = task.status.toLowerCase().replace(" ", "");
 
-    li.textContent =
-      task.title +
-      " -> " +
-      member.name +
-      " (" +
-      member.role +
-      ") [" +
-      task.status +
-      "] ";
+    li.innerHTML = `
+      <div>
+        <strong>${task.title}</strong><br>
+        👤 ${member.name} (${member.role})<br>
+        📅 ${task.dueDate || "No date"}<br>
+        🔥 <span class="${task.priority.toLowerCase()}">${task.priority}</span>
+      </div>
+      <div>
+        <strong>[${task.status}]</strong>
+      </div>
+    `;
 
-    const statusBtn = document.createElement("button");
-    statusBtn.textContent = "Change Status";
-    statusBtn.style.marginLeft = "10px";
-    statusBtn.onclick = () => changeStatus(task.id);
+    const btn1 = document.createElement("button");
+    btn1.textContent = "Status";
+    btn1.onclick = () => changeStatus(task.id);
 
-    const deleteBtn = document.createElement("button");
-    deleteBtn.textContent = "Delete";
-    deleteBtn.style.marginLeft = "5px";
-    deleteBtn.onclick = () => deleteTask(task.id);
+    const btn2 = document.createElement("button");
+    btn2.textContent = "Delete";
+    btn2.onclick = () => deleteTask(task.id);
 
-    li.appendChild(statusBtn);
-    li.appendChild(deleteBtn);
+    li.appendChild(btn1);
+    li.appendChild(btn2);
     list.appendChild(li);
   });
 
-  // Dashboard calculations
-  const todo = tasks.filter(t => t.status === "To Do").length;
-  const progress = tasks.filter(t => t.status === "In Progress").length;
-  const done = tasks.filter(t => t.status === "Done").length;
+  updateDashboard();
+}
 
-  document.getElementById("todoCount").textContent = "To Do: " + todo;
-  document.getElementById("progressCount").textContent = "In Progress: " + progress;
-  document.getElementById("doneCount").textContent = "Done: " + done;
-  document.getElementById("totalCount").textContent = "Total Tasks: " + tasks.length;
+function updateDashboard() {
+  document.getElementById("todoCount").textContent =
+    tasks.filter(t => t.status === "To Do").length;
+
+  document.getElementById("progressCount").textContent =
+    tasks.filter(t => t.status === "In Progress").length;
+
+  document.getElementById("doneCount").textContent =
+    tasks.filter(t => t.status === "Done").length;
+
+  document.getElementById("totalCount").textContent = tasks.length;
+
+  const completed = tasks.filter(t => t.status === "Done").length;
+  const percent = tasks.length
+    ? Math.round((completed / tasks.length) * 100)
+    : 0;
+
+  document.getElementById("completion").textContent = percent + "%";
+}
+
+function searchTasks() {
+  const search = document.getElementById("searchInput").value.toLowerCase();
+  const filtered = tasks.filter(t =>
+    t.title.toLowerCase().includes(search)
+  );
+  render(filtered);
 }
 
 function populateMembers() {
   const select = document.getElementById("memberSelect");
   select.innerHTML = '<option value="">Assign to...</option>';
 
-  members.forEach(member => {
+  members.forEach(m => {
     const option = document.createElement("option");
-    option.value = member.id;
-    option.textContent = member.name + " (" + member.role + ")";
+    option.value = m.id;
+    option.textContent = `${m.name} (${m.role})`;
     select.appendChild(option);
   });
 }
 
-// Initialize
+// INIT
 populateMembers();
+loadTasks();
 render();
 
 document.getElementById("addBtn").addEventListener("click", addTask);

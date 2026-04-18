@@ -1,36 +1,50 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Student Task Manager</title>
-<link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <title>Student Task Manager</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-<h1>Student Task Manager</h1>
-
 <div class="container">
 
-<input id="taskInput" placeholder="Enter task">
+  <header class="header">
+    <h1>📋 Student Task Manager</h1>
+    <p>Organise your team work efficiently</p>
+  </header>
 
-<select id="memberSelect">
-<option value="">Assign to...</option>
-</select>
+  <div class="input-section">
+    <input id="taskInput" placeholder="Enter task">
 
-<button id="addBtn">Add Task</button>
-<button onclick="markAllDone()">Mark All Done</button>
+    <select id="memberSelect"></select>
 
-<h2>Dashboard</h2>
-<div id="dashboard">
-<p id="todoCount"></p>
-<p id="progressCount"></p>
-<p id="doneCount"></p>
-<p id="totalCount"></p>
-</div>
+    <select id="prioritySelect">
+      <option value="">Priority</option>
+      <option value="High">High</option>
+      <option value="Medium">Medium</option>
+      <option value="Low">Low</option>
+    </select>
 
-<h2>Tasks</h2>
-<ul id="taskList"></ul>
+    <input type="date" id="dueDate">
+
+    <button id="addBtn" type="button">Add</button>
+  </div>
+
+  <input id="searchInput" placeholder="Search tasks..." onkeyup="searchTasks()">
+
+  <h2>📊 Dashboard</h2>
+  <div class="dashboard">
+    <div class="card"><h3 id="todoCount">0</h3><p>To Do</p></div>
+    <div class="card"><h3 id="progressCount">0</h3><p>In Progress</p></div>
+    <div class="card"><h3 id="doneCount">0</h3><p>Done</p></div>
+    <div class="card"><h3 id="totalCount">0</h3><p>Total</p></div>
+    <div class="card"><h3 id="completion">0%</h3><p>Completed</p></div>
+  </div>
+
+  <h2>📝 Tasks</h2>
+  <ul id="taskList"></ul>
 
 </div>
 
