@@ -1,78 +1,195 @@
 body {
-  font-family: Arial;
-  background: linear-gradient(135deg, #1e3c72, #2a5298);
   margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: #0f172a;
+  color: #fff;
 }
 
-.container {
-  max-width: 750px;
-  margin: 40px auto;
-  background: white;
-  padding: 20px;
-  border-radius: 12px;
-}
-
-.header {
-  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
-              url("https://images.unsplash.com/photo-1557804506-669a67965ba0") center/cover;
-  color: white;
-  padding: 30px;
-  border-radius: 10px;
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.input-section {
+/* LOGIN */
+.login-container {
   display: flex;
-  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
-input, select {
-  padding: 8px;
-  flex: 1;
+.login-box {
+  background: #1e293b;
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
 }
 
-button {
-  background: #2ecc71;
-  color: white;
+.login-box input {
+  padding: 10px;
+  margin: 10px;
+  width: 200px;
+}
+
+.login-box button {
+  padding: 10px 20px;
+  background: #6366f1;
   border: none;
-  padding: 8px;
+  color: white;
   cursor: pointer;
 }
 
-.dashboard {
+/* MAIN */
+.container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* HEADER */
+.header {
+  background: url("https://images.unsplash.com/photo-1557804506-669a67965ba0") center/cover;
+  height: 220px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.header-overlay {
+  background: rgba(0,0,0,0.6);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+}
+
+.header h1 {
+  font-size: 36px;
+}
+
+.header p {
+  color: #ccc;
+}
+
+/* TOP BAR */
+.top-bar {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+
+.top-bar button {
+  background: #ef4444;
+  border: none;
+  padding: 8px 12px;
+  color: white;
+  border-radius: 6px;
+}
+
+/* OVERVIEW */
+.overview {
+  background: #1e293b;
+  padding: 15px;
+  border-radius: 10px;
   margin: 20px 0;
 }
 
-.card {
-  background: #f4f6f8;
-  padding: 10px;
-  border-radius: 8px;
-  width: 120px;
-  text-align: center;
+/* INPUT */
+.input-section {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
 }
 
+input, select {
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+}
+
+button {
+  background: #6366f1;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* SEARCH */
+#searchInput {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+/* DASHBOARD */
+.dashboard {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.card {
+  flex: 1;
+  background: #1e293b;
+  padding: 15px;
+  text-align: center;
+  border-radius: 10px;
+  transition: 0.2s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+/* BOARD */
+.board {
+  display: flex;
+  gap: 20px;
+}
+
+.column {
+  flex: 1;
+  background: #1e293b;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+/* TASK */
 ul {
   list-style: none;
   padding: 0;
 }
 
 li {
-  background: #fff;
+  background: #0f172a;
+  padding: 10px;
   margin: 10px 0;
-  padding: 12px;
   border-radius: 8px;
+  border: 1px solid #334155;
   display: flex;
-  justify-content: space-between;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  flex-direction: column;
 }
 
-.todo { border-left: 5px solid #3498db; }
-.inprogress { border-left: 5px solid #f39c12; }
-.done { border-left: 5px solid #2ecc71; }
+li strong {
+  font-size: 14px;
+}
 
-.high { color: red; font-weight: bold; }
-.medium { color: orange; }
-.low { color: green; }
+li small {
+  opacity: 0.7;
+}
+
+li button {
+  margin-top: 5px;
+  width: fit-content;
+}
+
+/* EMPTY */
+.empty {
+  opacity: 0.5;
+  font-size: 14px;
+}
+
+/* FOOTER */
+footer {
+  text-align: center;
+  margin-top: 20px;
+  opacity: 0.6;
+}
+
