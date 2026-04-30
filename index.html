@@ -1,0 +1,114 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Student Task Manager</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<!-- LOGIN PAGE -->
+<div id="loginPage" class="login-container">
+  <div class="login-box">
+    <h2>🔐 Login</h2>
+    <input id="usernameInput" placeholder="Enter your name">
+    <button onclick="loginUser()">Login</button>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="app" style="display:none;">
+
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-overlay">
+      <h1>📋 Student Task Manager</h1>
+      <p>Organise your team work efficiently</p>
+    </div>
+  </div>
+
+  <!-- USER BAR -->
+  <div class="top-bar">
+    <h3 id="welcomeText"></h3>
+    <button onclick="logout()">Logout</button>
+  </div>
+
+  <!-- PROJECT OVERVIEW -->
+  <div class="overview">
+    <h3>📌 Project Overview</h3>
+    <p>
+      This system helps students manage group tasks, assign responsibilities,
+      track progress, and meet deadlines efficiently within a team.
+    </p>
+  </div>
+
+  <!-- INPUT -->
+  <div class="input-section">
+    <input id="taskInput" placeholder="Enter task">
+
+    <select id="memberSelect"></select>
+
+    <select id="prioritySelect">
+      <option value="">Priority</option>
+      <option value="High">High</option>
+      <option value="Medium">Medium</option>
+      <option value="Low">Low</option>
+    </select>
+
+    <input type="date" id="dueDate">
+
+    <button id="addBtn">Add</button>
+  </div>
+
+  <!-- SEARCH -->
+  <input id="searchInput" placeholder="Search tasks..." onkeyup="searchTasks()">
+
+  <!-- DASHBOARD -->
+  <div class="dashboard">
+    <div class="card"><h2 id="todoCount">0</h2><p>To Do</p></div>
+    <div class="card"><h2 id="progressCount">0</h2><p>In Progress</p></div>
+    <div class="card"><h2 id="doneCount">0</h2><p>Done</p></div>
+    <div class="card"><h2 id="totalCount">0</h2><p>Total</p></div>
+  </div>
+
+  <!-- TASK BOARD -->
+  <div class="board">
+
+    <div class="column">
+      <h3>To Do</h3>
+      <ul id="todoList"></ul>
+      <p class="empty">No tasks yet</p>
+    </div>
+
+    <div class="column">
+      <h3>In Progress</h3>
+      <ul id="progressList"></ul>
+      <p class="empty">No tasks yet</p>
+    </div>
+
+    <div class="column">
+      <h3>Done</h3>
+      <ul id="doneList"></ul>
+      <p class="empty">No tasks yet</p>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>Developed by Student Team • MMP Project</p>
+  </footer>
+
+</div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/task.js"></script>
+
+</body>
+</html>
+

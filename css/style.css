@@ -1,0 +1,195 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: #0f172a;
+  color: #fff;
+}
+
+/* LOGIN */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.login-box {
+  background: #1e293b;
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.login-box input {
+  padding: 10px;
+  margin: 10px;
+  width: 200px;
+}
+
+.login-box button {
+  padding: 10px 20px;
+  background: #6366f1;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+/* MAIN */
+.container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* HEADER */
+.header {
+  background: url("https://images.unsplash.com/photo-1557804506-669a67965ba0") center/cover;
+  height: 220px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.header-overlay {
+  background: rgba(0,0,0,0.6);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+}
+
+.header h1 {
+  font-size: 36px;
+}
+
+.header p {
+  color: #ccc;
+}
+
+/* TOP BAR */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.top-bar button {
+  background: #ef4444;
+  border: none;
+  padding: 8px 12px;
+  color: white;
+  border-radius: 6px;
+}
+
+/* OVERVIEW */
+.overview {
+  background: #1e293b;
+  padding: 15px;
+  border-radius: 10px;
+  margin: 20px 0;
+}
+
+/* INPUT */
+.input-section {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+input, select {
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+}
+
+button {
+  background: #6366f1;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* SEARCH */
+#searchInput {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+/* DASHBOARD */
+.dashboard {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.card {
+  flex: 1;
+  background: #1e293b;
+  padding: 15px;
+  text-align: center;
+  border-radius: 10px;
+  transition: 0.2s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+/* BOARD */
+.board {
+  display: flex;
+  gap: 20px;
+}
+
+.column {
+  flex: 1;
+  background: #1e293b;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+/* TASK */
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  background: #0f172a;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: 1px solid #334155;
+  display: flex;
+  flex-direction: column;
+}
+
+li strong {
+  font-size: 14px;
+}
+
+li small {
+  opacity: 0.7;
+}
+
+li button {
+  margin-top: 5px;
+  width: fit-content;
+}
+
+/* EMPTY */
+.empty {
+  opacity: 0.5;
+  font-size: 14px;
+}
+
+/* FOOTER */
+footer {
+  text-align: center;
+  margin-top: 20px;
+  opacity: 0.6;
+}
+
