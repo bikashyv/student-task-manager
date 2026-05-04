@@ -10,7 +10,7 @@ Update task status (To Do, In Progress, Done)
 Delete tasks
 Mark all tasks as done
 Dashboard showing task statistics
-
+### Business Analysis contribution
 ## Requirements
 
 ### Functional Requirements
@@ -25,6 +25,7 @@ Dashboard showing task statistics
 - The interface should be clean and responsive
 - The application should work on modern browsers
 - Data should be stored locally using localStorage
+Requirements were analysed and documented to ensure the system meets user needs and usability standards.
 
 Technologies Used
 HTML
