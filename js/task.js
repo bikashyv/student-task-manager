@@ -1,45 +1,53 @@
-function addTask() {
-  const input = document.getElementById("taskInput");
-  const memberSelect = document.getElementById("memberSelect");
-  const prioritySelect = document.getElementById("prioritySelect");
-  const dueDate = document.getElementById("dueDate");
 
-  if (
-    input.value.trim() === "" ||
-    memberSelect.value === "" ||
-    prioritySelect.value === ""
-  ) {
-    alert("Fill all fields");
-    return;
+let loggedUser = localStorage.getItem("user") || "";
+
+// LOGIN
+function loginUser() {
+  const name = document.getElementById("usernameInput").value.trim();
+  if (!name) return alert("Enter name");
+
+  localStorage.setItem("user", name);
+  loggedUser = name;
+  showApp();
+}
+
+function showApp() {
+  if (loggedUser) {
+    document.getElementById("loginPage").style.display = "none";
+    document.getElementById("app").style.display = "block";
+    document.getElementById("welcomeText").textContent = "👤 " + loggedUser;
   }
+}
 
-  const task = {
+function logout() {
+  localStorage.removeItem("user");
+  location.reload();
+}
+
+// ADD TASK
+function addTask() {
+  const t = document.getElementById("taskInput").value;
+  const m = document.getElementById("memberSelect").value;
+  const p = document.getElementById("prioritySelect").value;
+  const d = document.getElementById("dueDate").value;
+
+  if (!t || !m || !p) return alert("Fill all fields");
+
+  tasks.push({
     id: Date.now(),
-    title: input.value,
-    assignedTo: parseInt(memberSelect.value),
+    title: t,
+    assignedTo: parseInt(m),
     status: "To Do",
-    priority: prioritySelect.value,
-    dueDate: dueDate.value
-  };
+    priority: p,
+    dueDate: d
+  });
 
-  tasks.push(task);
   saveTasks();
-
-  input.value = "";
-  memberSelect.value = "";
-  prioritySelect.value = "";
-  dueDate.value = "";
-
+  document.getElementById("taskInput").value = "";
   render();
 }
 
-function deleteTask(id) {
-  if (!confirm("Delete task?")) return;
-  tasks = tasks.filter(t => t.id !== id);
-  saveTasks();
-  render();
-}
-
+// CHANGE STATUS (SIMPLE BUTTON)
 function changeStatus(id) {
   tasks = tasks.map(t => {
     if (t.id === id) {
@@ -54,49 +62,60 @@ function changeStatus(id) {
   render();
 }
 
-function render(filteredTasks = tasks) {
-  const list = document.getElementById("taskList");
-  list.innerHTML = "";
+// DELETE
+function deleteTask(id) {
+  tasks = tasks.filter(t => t.id !== id);
+  saveTasks();
+  render();
+}
 
-  if (filteredTasks.length === 0) {
-    list.innerHTML = "<p>No tasks yet</p>";
-    return;
-  }
+// RENDER
+function render(filtered = tasks) {
+  const todo = document.getElementById("todoList");
+  const progress = document.getElementById("progressList");
+  const done = document.getElementById("doneList");
 
-  filteredTasks.forEach(task => {
+  todo.innerHTML = "";
+  progress.innerHTML = "";
+  done.innerHTML = "";
+
+  filtered.forEach(task => {
     const member = members.find(m => m.id === task.assignedTo);
 
     const li = document.createElement("li");
-    li.className = task.status.toLowerCase().replace(" ", "");
+
+    // overdue highlight
+    if (task.dueDate && new Date(task.dueDate) < new Date()) {
+      li.classList.add("overdue");
+    }
 
     li.innerHTML = `
-      <div>
-        <strong>${task.title}</strong><br>
-        👤 ${member.name} (${member.role})<br>
-        📅 ${task.dueDate || "No date"}<br>
-        🔥 <span class="${task.priority.toLowerCase()}">${task.priority}</span>
-      </div>
-      <div>
-        <strong>[${task.status}]</strong>
-      </div>
+      <strong>${task.title}</strong>
+      <small>${member?.name}</small>
+      <small>${task.priority} • ${task.dueDate || ""}</small>
     `;
 
-    const btn1 = document.createElement("button");
-    btn1.textContent = "Status";
-    btn1.onclick = () => changeStatus(task.id);
+    // ➡️ STATUS BUTTON
+    const moveBtn = document.createElement("button");
+    moveBtn.textContent = "➡";
+    moveBtn.onclick = () => changeStatus(task.id);
 
-    const btn2 = document.createElement("button");
-    btn2.textContent = "Delete";
-    btn2.onclick = () => deleteTask(task.id);
+    const delBtn = document.createElement("button");
+    delBtn.textContent = "✕";
+    delBtn.onclick = () => deleteTask(task.id);
 
-    li.appendChild(btn1);
-    li.appendChild(btn2);
-    list.appendChild(li);
+    li.appendChild(moveBtn);
+    li.appendChild(delBtn);
+
+    if (task.status === "To Do") todo.appendChild(li);
+    else if (task.status === "In Progress") progress.appendChild(li);
+    else done.appendChild(li);
   });
 
   updateDashboard();
 }
 
+// DASHBOARD
 function updateDashboard() {
   document.getElementById("todoCount").textContent =
     tasks.filter(t => t.status === "To Do").length;
@@ -108,38 +127,34 @@ function updateDashboard() {
     tasks.filter(t => t.status === "Done").length;
 
   document.getElementById("totalCount").textContent = tasks.length;
-
-  const completed = tasks.filter(t => t.status === "Done").length;
-  const percent = tasks.length
-    ? Math.round((completed / tasks.length) * 100)
-    : 0;
-
-  document.getElementById("completion").textContent = percent + "%";
 }
 
+// SEARCH
 function searchTasks() {
-  const search = document.getElementById("searchInput").value.toLowerCase();
-  const filtered = tasks.filter(t =>
-    t.title.toLowerCase().includes(search)
-  );
-  render(filtered);
+  const q = document.getElementById("searchInput").value.toLowerCase();
+  render(tasks.filter(t => t.title.toLowerCase().includes(q)));
 }
 
+// MEMBERS
 function populateMembers() {
-  const select = document.getElementById("memberSelect");
-  select.innerHTML = '<option value="">Assign to...</option>';
+  const s = document.getElementById("memberSelect");
+  s.innerHTML = '<option value="">Assign</option>';
 
   members.forEach(m => {
-    const option = document.createElement("option");
-    option.value = m.id;
-    option.textContent = `${m.name} (${m.role})`;
-    select.appendChild(option);
+    const o = document.createElement("option");
+    o.value = m.id;
+    o.textContent = m.name;
+    s.appendChild(o);
   });
 }
 
 // INIT
-populateMembers();
-loadTasks();
-render();
+document.addEventListener("DOMContentLoaded", () => {
+  populateMembers();
+  loadTasks();
+  showApp();
+  render();
 
-document.getElementById("addBtn").addEventListener("click", addTask);
+  document.getElementById("addBtn").onclick = addTask;
+});
+
