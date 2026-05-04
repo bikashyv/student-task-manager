@@ -11,6 +11,21 @@ Delete tasks
 Mark all tasks as done
 Dashboard showing task statistics
 
+## Requirements
+
+### Functional Requirements
+- Users can log in using their name
+- Users can create tasks
+- Tasks can be assigned to team members
+- Tasks can be updated (To Do, In Progress, Done)
+- Tasks can be deleted
+
+### Non-Functional Requirements
+- The system should be easy to use
+- The interface should be clean and responsive
+- The application should work on modern browsers
+- Data should be stored locally using localStorage
+
 Technologies Used
 HTML
 CSS
