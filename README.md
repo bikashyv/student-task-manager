@@ -61,3 +61,20 @@ Use of GitHub for version control
 Continuous integration of work
 
 
+## Security Considerations
+
+- Basic input validation has been implemented to prevent empty or invalid task entries
+- User login is handled using localStorage to ensure only logged-in users can access the system
+- Data is stored securely in the browser using localStorage
+
+### Limitations
+- No encryption is applied to stored data
+- No backend authentication system is implemented
+
+### Future Improvements
+- Implement secure authentication using a backend system
+- Add password protection and user accounts
+- Use encryption for sensitive data storage
+- Implement role-based access control
+
+
