@@ -1,10 +1,15 @@
-
 let loggedUser = localStorage.getItem("user") || "";
 
 // LOGIN
 function loginUser() {
   const name = document.getElementById("usernameInput").value.trim();
+
   if (!name) return alert("Enter name");
+
+  if (name.length < 2) {
+    alert("Name must be at least 2 characters");
+    return;
+  }
 
   localStorage.setItem("user", name);
   loggedUser = name;
@@ -16,6 +21,9 @@ function showApp() {
     document.getElementById("loginPage").style.display = "none";
     document.getElementById("app").style.display = "block";
     document.getElementById("welcomeText").textContent = "👤 " + loggedUser;
+  } else {
+    document.getElementById("loginPage").style.display = "block";
+    document.getElementById("app").style.display = "none";
   }
 }
 
@@ -26,12 +34,21 @@ function logout() {
 
 // ADD TASK
 function addTask() {
-  const t = document.getElementById("taskInput").value;
+  const t = document.getElementById("taskInput").value.trim();
   const m = document.getElementById("memberSelect").value;
   const p = document.getElementById("prioritySelect").value;
   const d = document.getElementById("dueDate").value;
 
-  if (!t || !m || !p) return alert("Fill all fields");
+  // 🔐 SECURITY VALIDATION (Sumit contribution)
+  if (!t || !m || !p) {
+    alert("All fields are required");
+    return;
+  }
+
+  if (t.length < 3) {
+    alert("Task must be at least 3 characters");
+    return;
+  }
 
   tasks.push({
     id: Date.now(),
@@ -39,7 +56,8 @@ function addTask() {
     assignedTo: parseInt(m),
     status: "To Do",
     priority: p,
-    dueDate: d
+    dueDate: d,
+    createdBy: loggedUser // 👨‍💻 Developer feature
   });
 
   saveTasks();
@@ -47,7 +65,7 @@ function addTask() {
   render();
 }
 
-// CHANGE STATUS (SIMPLE BUTTON)
+// CHANGE STATUS
 function changeStatus(id) {
   tasks = tasks.map(t => {
     if (t.id === id) {
@@ -91,11 +109,12 @@ function render(filtered = tasks) {
 
     li.innerHTML = `
       <strong>${task.title}</strong>
-      <small>${member?.name}</small>
+      <small>👤 ${member?.name}</small>
+      <small>🧑 Created by: ${task.createdBy || "Unknown"}</small>
       <small>${task.priority} • ${task.dueDate || ""}</small>
     `;
 
-    // ➡️ STATUS BUTTON
+    // STATUS BUTTON
     const moveBtn = document.createElement("button");
     moveBtn.textContent = "➡";
     moveBtn.onclick = () => changeStatus(task.id);
@@ -157,4 +176,3 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("addBtn").onclick = addTask;
 });
-
