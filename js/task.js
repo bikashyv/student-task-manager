@@ -1,5 +1,6 @@
-// 👨‍💻 Software Developer Contribution
-// Handles task management logic, UI interaction, task rendering, and dynamic updates.
+// 👨‍💻 Software Developer Contributions
+// Sandesh and Dilip worked on frontend interaction, task management logic,
+// responsive UI improvements, task rendering, and dynamic user experience enhancements.
 
 let loggedUser = localStorage.getItem("user") || "";
 
@@ -23,7 +24,8 @@ function showApp() {
   if (loggedUser) {
     document.getElementById("loginPage").style.display = "none";
     document.getElementById("app").style.display = "block";
-    document.getElementById("welcomeText").textContent = "👤 Welcome, " + loggedUser;
+    document.getElementById("welcomeText").textContent =
+      "👤 Welcome, " + loggedUser;
   } else {
     document.getElementById("loginPage").style.display = "block";
     document.getElementById("app").style.display = "none";
@@ -37,6 +39,7 @@ function logout() {
 
 // ADD TASK
 function addTask() {
+
   const t = document.getElementById("taskInput").value.trim();
   const m = document.getElementById("memberSelect").value;
   const p = document.getElementById("prioritySelect").value;
@@ -66,21 +69,29 @@ function addTask() {
 
   saveTasks();
 
-  // Clear input field after adding task
+  // Clear input after task creation
   document.getElementById("taskInput").value = "";
 
   render();
 }
 
-// CHANGE STATUS
+// CHANGE TASK STATUS
 function changeStatus(id) {
+
   tasks = tasks.map(t => {
+
     if (t.id === id) {
 
-      // Move task through workflow stages
-      if (t.status === "To Do") t.status = "In Progress";
-      else if (t.status === "In Progress") t.status = "Done";
-      else t.status = "To Do";
+      // Workflow logic
+      if (t.status === "To Do") {
+        t.status = "In Progress";
+
+      } else if (t.status === "In Progress") {
+        t.status = "Done";
+
+      } else {
+        t.status = "To Do";
+      }
     }
 
     return t;
@@ -92,6 +103,7 @@ function changeStatus(id) {
 
 // DELETE TASK
 function deleteTask(id) {
+
   tasks = tasks.filter(t => t.id !== id);
 
   saveTasks();
@@ -128,12 +140,12 @@ function render(filtered = tasks) {
       <small>📅 Due Date: ${task.dueDate || "No date"}</small>
     `;
 
-    // ➡ MOVE BUTTON
+    // MOVE BUTTON
     const moveBtn = document.createElement("button");
     moveBtn.textContent = "Move ➡";
     moveBtn.onclick = () => changeStatus(task.id);
 
-    // ❌ DELETE BUTTON
+    // DELETE BUTTON
     const delBtn = document.createElement("button");
     delBtn.textContent = "Delete";
     delBtn.onclick = () => deleteTask(task.id);
@@ -141,14 +153,17 @@ function render(filtered = tasks) {
     li.appendChild(moveBtn);
     li.appendChild(delBtn);
 
-    // Add task into correct section
+    // Render task into correct column
     if (task.status === "To Do") {
+
       todo.appendChild(li);
 
     } else if (task.status === "In Progress") {
+
       progress.appendChild(li);
 
     } else {
+
       done.appendChild(li);
     }
   });
@@ -172,10 +187,11 @@ function updateDashboard() {
     tasks.length;
 }
 
-// SEARCH
+// SEARCH TASKS
 function searchTasks() {
 
-  const q = document.getElementById("searchInput").value.toLowerCase();
+  const q =
+    document.getElementById("searchInput").value.toLowerCase();
 
   render(
     tasks.filter(t =>
@@ -184,7 +200,7 @@ function searchTasks() {
   );
 }
 
-// POPULATE MEMBERS
+// POPULATE TEAM MEMBERS
 function populateMembers() {
 
   const s = document.getElementById("memberSelect");
