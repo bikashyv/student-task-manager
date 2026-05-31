@@ -1,8 +1,22 @@
  // Database Analyst Contribution
- // This file defines the system data structure for members and task storage.
- // localStorage is used to simulate database persistence within the browser.
+// This file manages the application's data structure.
+//
+// Members Entity:
+// id -> unique member identifier
+// name -> member name
+// role -> team role
+//
+// Tasks Entity:
+// id -> unique task identifier
+// title -> task title
+// assignedTo -> member ID
+// status -> task progress status
+// priority -> task priority level
+// dueDate -> task deadline
+// createdBy -> user who created the task
+//
+// Data persistence is implemented using browser localStorage.
 
- // Team member data structure used for task assignment
  let members = [
   { id: 1, name: "Bikash", role: "Database Analyst" },
   { id: 2, name: "Himanshu", role: "Project Manager" },
